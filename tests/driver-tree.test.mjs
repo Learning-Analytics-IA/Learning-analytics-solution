@@ -17,3 +17,30 @@ test('String amount validation precedes Number rounding at the cap',()=>{for(con
 
 test('Readable export preserves sources and escapes untrusted context',()=>{const p=demoPayload();p.question='<img src=x onerror=alert(1)>';p.reference.context.source='<script>alert(1)</script>';const html=exportReportHTML(buildReport(p));assert.ok(html.includes('Content-Security-Policy'));assert.ok(html.includes('&lt;script&gt;'));assert.ok(html.includes('&lt;img'));assert.ok(!html.includes('<script>'));assert.ok(!html.includes('<img src=x'));assert.ok(html.includes('Source :'));assert.ok(html.includes('Réf.'));});
 test('Unknown currency is never silently displayed as euros',()=>{const p=demoPayload();p.reference.context.currency=null;const html=reportHTML(buildReport(p));assert.ok(html.includes('devise inconnue'));assert.ok(!html.includes('€'));});
+
+test('Presentation distinguishes rate points from relative changes and preserves signed contributions',()=>{
+ const html=reportHTML(buildReport(demoPayload()));
+ assert.ok(html.includes('-1 pts'));
+ assert.ok(html.includes('+6,25 pts'));
+ assert.ok(html.includes('-16 %'));
+ assert.ok(html.includes('dt-bar-down'));
+ assert.ok(html.includes('8 / 8 identités vérifiées'));
+ const up=demoPayload();[up.reference,up.comparison]=[up.comparison,up.reference];
+ const rising=reportHTML(buildReport(up));
+ assert.ok(rising.includes('+19,05 %'));
+ assert.ok(rising.includes('dt-bar-up'));
+});
+
+test('Unavailable comparisons and zero reference stay explicit in cards and exports',()=>{
+ const p=demoPayload();p.reference.context.source=null;
+ const html=reportHTML(buildReport(p));
+ assert.ok(html.includes('Comparaison indisponible'));
+ assert.ok(html.includes('Contributions indisponibles'));
+ assert.ok(!html.includes('contribution-track'));
+ const zero=demoPayload();zero.reference.data.ca_net=0;
+ const exported=exportReportHTML(buildReport(zero));
+ assert.ok(exported.includes('Base de référence nulle'));
+ assert.ok(exported.includes('Non calculable'));
+ assert.ok(exported.includes('@media print'));
+ assert.ok(!exported.includes('<link'));
+});
