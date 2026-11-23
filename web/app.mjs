@@ -1,8 +1,12 @@
+import {driverStyles} from './driver-styles.mjs';
 import {buildReport,demoPayload} from './driver-core.mjs';
 import {treeView,renderDriverTool} from './driver-ui.mjs';
 import {renderDriverCourse} from './driver-course.mjs';
 import * as account from './account.mjs';
 import {renderAccount} from './workspace.mjs';
+const driverStyle=document.createElement('style');
+driverStyle.textContent=driverStyles;
+document.head.append(driverStyle);
 const main=document.querySelector('main');
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function toast(text){const t=document.querySelector('#toast');t.textContent=text;t.style.display='block';clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.style.display='none',4000);}
