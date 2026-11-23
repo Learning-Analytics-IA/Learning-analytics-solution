@@ -17,3 +17,11 @@ Les nombres utilisent la précision JavaScript ; les égalités sont contrôlée
 Vérifier : npm test, puis npm run build. Ouvrir #outil et rejouer le cas synthétique, une valeur absente et un export. Les appels de modèle payants restent désactivés ; le mode publié est déterministe, non conversationnel génératif.
 
 Des configurations extrêmes peuvent ne pas se réconcilier avec la précision flottante du navigateur ; le calcul est alors refusé explicitement au lieu de publier des contributions incohérentes. Une donnée monétaire décimale importée doit être fournie comme chaîne pour conserver sa précision lexicale.
+
+## Présentation du rapport
+
+Le rapport commence par les quatre KPI de synthèse (CA de référence, CA comparé, écart et variation), puis présente les neuf indicateurs reliés et les contributions classées par montant absolu. Chaque carte affiche la valeur comparée, la référence et l’évolution ; les taux évoluent en points, les autres indicateurs en pourcentage. Les couleurs indiquent le sens numérique de la variation, sans conclure qu’une hausse est favorable (notamment pour la démarque).
+
+Les contributions utilisent une échelle commune, centrée sur zéro : baisses à gauche, hausses à droite. Les indicateurs détaillés sont accessibles dans une section dépliable. Les sources, contrôles et limites restent présents. L’export HTML autonome partage la présentation de l’application, sans dépendance réseau, avec une mise en page d’impression. Les calculs du moteur restent inchangés.
+
+Critères de revue : neuf cartes et huit contrôles pour le cas complet ; variation de CA −16 %, TT −1 point et démarque +6,25 points ; contributions TT −2 900 € et part conservée −1 900 €. Pour un contexte incomplet, aucune variation ou contribution n’est suggérée. Pour une référence nulle, la variation relative reste non calculable. Vérifier les pages accueil, méthode et outil sur ordinateur et mobile, puis l’export HTML et son impression.
